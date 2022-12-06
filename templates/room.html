@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <title>{{ title }}</title>
+    <style>
+    body {
+      background-color: #111111;
+      color: #DDD;
+    }
+    .flex-container-parent {
+      display: flex;
+
+      flex-flow: row wrap;
+      
+      justify-content: space-around;
+      
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      gap: 15px;
+    }
+
+    .flex-container-c1 {
+      background-color:#112233;
+      border-radius: 10%;
+      display: flex;
+
+      flex-flow: column;
+      
+      justify-content: space-around;
+      text-align: center;
+
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      flex: 1 0 21%;
+
+    }
+    @media ( max-width: 1350px) {
+      .flex-container-c1 { flex: 1 0 26%; }
+    }
+    @media ( max-width: 1000px) {
+      .flex-container-c1 { flex: 1 0 34%; }
+    }
+    @media ( max-width: 645px) {
+      .flex-container-c1 { flex: 1 0 51%; }
+    }
+    .flex-container-c2 {
+      border-radius: 10%;
+      display: flex;
+
+      flex-flow: column;
+      
+      justify-content: space-around;
+      
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      flex: 1 1 0px;
+
+    }
+
+    .flex-container-c3 {
+      display: flex;
+
+      flex-flow: row wrap;
+      
+      justify-content: space-around;
+      
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      flex-basis: 0;
+
+    }
+    .flex-item-title {
+      padding: -1px;
+      text-align: center;
+    }  
+    .flex-item {
+      padding: 25px;
+      text-align: center;
+      flex-basis: 0;
+    }  
+    a {
+      color: inherit;
+      text-decoration: inherit;
+      cursor: inherit;
+    }
+    </style>
+</head>
+<body>
+    
+
+<ul class="flex-container-parent">
+    {% for room, subdict in api_info.items() %}
+    <ul class="flex-container-c1">
+    <h1><a href="/byName/{{ room }}">{{ room }}</a></h1>
+    <ul class="flex-container-c2">
+      <li class="flex-item-title"><h2>Washers</h2>
+      </li>
+      <li class="flex-item">
+      <ul class="flex-container-c3">
+    {% for washer in subdict['data']['washers'] %}
+    <li class="flex-item">
+      <h3>{{ washer['label_id'] }}</h3>
+      {% if washer['left_time'] %}
+        <img src="{{ url_for('static', filename='ic_washer_inuse.png') }}">
+      {% else %}
+        <img src="{{ url_for('static', filename='ic_washer_avail.png') }}">
+      {% endif %}
+      <h3>{{ washer['status_text'] }}</h3>
+    </li>
+    {% endfor %}
+    </ul>
+      </li>
+    </ul>
+    <ul class="flex-container-c2">
+    <li class="flex-item-title"><h2>Dryers</h2>
+    </li>
+    <li class="flex-item">
+    <ul class="flex-container-c3">
+    
+    {% for dryer in subdict['data']['dryers'] %}
+    <li class="flex-item">
+      <h3>{{ dryer['label_id'] }}</h3>
+      {% if dryer['left_time'] %}
+        <img src="{{ url_for('static', filename='ic_dryer_inuse.png') }}">
+      {% else %}
+        <img src="{{ url_for('static', filename='ic_dryer_avail.png') }}">
+      {% endif %}
+      <h3>{{ dryer['status_text'] }}</h3>
+
+    </li>
+    {% endfor %}
+    </ul>
+    </li>
+    </ul>
+    </ul>
+
+    {% endfor %}
+ 
+  </ul>
+  
+  
+</body>
+</html>
