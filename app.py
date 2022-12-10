@@ -20,7 +20,7 @@ def roomGroup(room_group):
             room_dict[list(api.rooms.keys())[list(api.rooms.values()).index(room)]] = api.get_room(room)
         return render_template('room.html', api_info=room_dict, title=room_group)
     else:
-        return "<h1>Error: Invalid room</h1>"
+        return "<h1>Error: Invalid room group</h1>"
 
 @app.route('/byName/<string:room_name>')
 def singleRoom(room_name):

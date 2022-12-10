@@ -23,7 +23,15 @@ def url_asm(baseurl, location_id, room_num, token):
     return f'{baseurl}?location_id={location_id}&room_number={room_num}&token={token}'
 
 def get_room(room_num):
-    return json.loads(requests.get(url_asm(baseURL, location_id, room_num, token), headers=headers).content)
+    request = requests.get(url_asm(baseURL, location_id, room_num, token), headers=headers, timeout=10)
+    if request.ok:
+        try:
+            return json.loads(request.content)
+        except ValueError:
+            return -1
+    else:
+        return -1
+
 
 def get_rooms(rooms=rooms):
     out_dict = {}
