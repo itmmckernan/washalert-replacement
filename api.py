@@ -28,7 +28,7 @@ def authenticate():
         'password': config['Main']['username'],
         'language': "1"
     }
-    request = requests.post('https://getwashconnect.com/api/auth/login', headers=headers, body=body)
+    request = requests.post('https://getwashconnect.com/api/auth/login', headers=headers, json=body)
     global token
     if request.ok:
         try:
