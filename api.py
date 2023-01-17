@@ -41,7 +41,7 @@ authenticate()
 def get_room(room_num, level=0):
     try:
         return _get_room(room_num)
-    except Exception("Unauthorized"):
+    except:
         authenticate()
         get_room(room_num, level+1)
         if level > 5:
