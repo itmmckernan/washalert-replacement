@@ -32,7 +32,6 @@ def authenticate():
     global token
     if request.ok:
         try:
-            print(json.loads(request.content))
             token = json.loads(request.content)['token']
         except:
             pass
