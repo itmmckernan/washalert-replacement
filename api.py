@@ -24,14 +24,15 @@ def url_asm(baseurl, location_id, room_num, token):
 
 def authenticate():
     body = {
-        'username': config['Main']['username'],
-        'password': config['Main']['username'],
+        'login': config['Main']['username'],
+        'password': config['Main']['password'],
         'language': "1"
     }
     request = requests.post('https://getwashconnect.com/api/auth/login', headers=headers, json=body)
     global token
     if request.ok:
         try:
+            print(json.loads(request.content))
             token = json.loads(request.content)['token']
         except:
             pass
